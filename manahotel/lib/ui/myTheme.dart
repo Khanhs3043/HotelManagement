@@ -13,6 +13,7 @@ class MyTheme with ChangeNotifier{
   Color color7 = const Color(0xFFFDA0A1);
   Color color8 = const Color(0xFF000001);
   Color color9 = const Color(0xFFBABABB);
+  Color color10 = const Color(0xFF4CFABF);
 
   setBookedRoomColor(Color color){
     bookedRoomColor = color;
@@ -33,6 +34,7 @@ class MyTheme with ChangeNotifier{
       color7 = const Color(0xFFFDA0A1);
       color8 = const Color(0xFF000001);
       color9 = const Color(0xFFBABABB);
+      color10 = const Color(0xFF4CFABF);
     }else{
       color1 = const Color(0xFF181819);
       color2 = const Color(0xFF1F1F20);
@@ -43,6 +45,7 @@ class MyTheme with ChangeNotifier{
       color7 = const Color(0xFF6E1819);
       color8 = const Color(0xFFFDFDFE);
       color9 = const Color(0xFFBABABB);
+      color10 = const Color(0xFF4CFABF);
     }
     notifyListeners();
   }

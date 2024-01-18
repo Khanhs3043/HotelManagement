@@ -3,6 +3,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:manahotel/ui/myTheme.dart';
 import 'package:provider/provider.dart';
+import 'package:manahotel/screens/loginScreen.dart';
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
 
@@ -172,12 +173,20 @@ class SettingScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Đăng xuất',style: TextStyle(fontSize: size,color: theme.color8),),
-                    Icon(Icons.power_settings_new_outlined,size: 35,color: Colors.redAccent,)
-                  ],
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => loginScreen())
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Đăng xuất',style: TextStyle(fontSize: size,color: theme.color8),),
+                      Icon(Icons.power_settings_new_outlined,size: 35,color: Colors.redAccent,)
+                    ],
+                  ),
                 ),
               )
             ],

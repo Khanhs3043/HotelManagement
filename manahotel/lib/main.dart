@@ -3,6 +3,7 @@ import 'package:manahotel/model/hotelMana.dart';
 import 'package:manahotel/screens/homeScreen.dart';
 import 'package:manahotel/ui/myTheme.dart';
 import 'package:provider/provider.dart';
+import 'package:manahotel/screens/loginScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       ],
         child: const MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: HomeScreen(),
+          home: loginScreen(),
         )
     );
   }
