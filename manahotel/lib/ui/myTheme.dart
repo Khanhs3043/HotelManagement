@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MyTheme with ChangeNotifier{
+  Color bookedRoomColor = const Color(0xFFD7D7D8);
+  Color emptyRoomColor = const Color(0xFFCBE8ED);
   bool isDark = false;
   Color color1 = const Color(0xFFF2F2F3);
   Color color2 = const Color(0xFFFDFDFE);
@@ -12,6 +14,14 @@ class MyTheme with ChangeNotifier{
   Color color8 = const Color(0xFF000001);
   Color color9 = const Color(0xFFBABABB);
 
+  setBookedRoomColor(Color color){
+    bookedRoomColor = color;
+    notifyListeners();
+  }
+  setEmptyRoomColor(Color color){
+    emptyRoomColor = color;
+    notifyListeners();
+  }
   setTheme(bool isDark){
     if(!isDark){
       color1 = const Color(0xFFF2F2F3);
@@ -34,6 +44,9 @@ class MyTheme with ChangeNotifier{
       color8 = const Color(0xFFFDFDFE);
       color9 = const Color(0xFFBABABB);
     }
+    notifyListeners();
+  }
+  change(){
     notifyListeners();
   }
 }

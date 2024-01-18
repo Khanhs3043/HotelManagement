@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../screens/roomInfoScreen.dart';
 import '../ui/myTheme.dart';
+import 'customer.dart';
 enum RoomType{single,double}
 enum RoomStatus{available,unavailable}
 class Room extends StatelessWidget {
@@ -18,15 +19,17 @@ class Room extends StatelessWidget {
   RoomType type = RoomType.single;
   int cost = 100000;
   int floor = 1;
+  Customer? customer;
+
   RoomStatus status = RoomStatus.available;
   @override
   Widget build(BuildContext context) {
     Icon roomIcon;
     Color roomColor = Provider.of<MyTheme>(context).color5;
     if(status == RoomStatus.available){
-      roomColor = Provider.of<MyTheme>(context).color5;
+      roomColor = Provider.of<MyTheme>(context).emptyRoomColor;
     }else{
-      roomColor = Provider.of<MyTheme>(context).color6;
+      roomColor = Provider.of<MyTheme>(context).bookedRoomColor;
     }
     if(type ==RoomType.single){
       roomIcon = const Icon(Icons.bedroom_child_outlined);
@@ -59,6 +62,9 @@ class Room extends StatelessWidget {
         ),
       ),
     );
+  }
+  getString(){
+    return "$floor - $number";
   }
 }
 

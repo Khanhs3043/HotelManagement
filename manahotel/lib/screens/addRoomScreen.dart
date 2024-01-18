@@ -5,8 +5,11 @@ import 'package:provider/provider.dart';
 
 import '../objects/room.dart';
 class AddRoomScreen extends StatelessWidget {
+  const AddRoomScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
+    String alert ='';
     final List<String> items = ['Phòng đơn', 'Phòng đôi'];
     String selectedValue = 'Phòng đơn';
     RoomType roomType = RoomType.single;
@@ -80,17 +83,22 @@ class AddRoomScreen extends StatelessWidget {
                 ),
                   onPressed: (){
                     Room room = Room(number: roomNumber.text,floor: int.parse(roomFloor.text),cost: int.parse(roomCost.text),type: roomType,);
-                    if(mana.addRoom(room)){
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          backgroundColor: Colors.transparent,
-                          content: Text("Thêm thành công!")));
-                      print('Thêm thành công');
-                    }
-                    else {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        backgroundColor: Colors.transparent,
-                          content: Text("Thêm không thành công!")));
-                    }
+                    bool canAdd = true;
+                      if(int.parse(roomFloor.text)>6) {alert='Tầng không hợp lệ'; canAdd=false;}
+                      else{
+                        for (var i in mana.listFloor[int.parse(roomFloor.text)-1].listRoom){
+                          if (i.number == roomNumber.text) {
+                            alert = 'Trùng số phòng';
+                            canAdd = false;
+                          }
+                        }
+                      }
+                      if(canAdd){ mana.addRoom(room); alert='Thêm phòng thành công';
+                      }
+
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        backgroundColor: Colors.grey,
+                        content: Text(alert,style: const TextStyle(color: Colors.white),)));
                   },
                   child: Text("Thêm",style: TextStyle(color: theme.color8,fontWeight: FontWeight.bold,fontSize: 18),),)
             ],

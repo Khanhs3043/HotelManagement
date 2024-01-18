@@ -1,3 +1,5 @@
+
+import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:manahotel/ui/myTheme.dart';
 import 'package:provider/provider.dart';
@@ -7,8 +9,11 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double size = 18;
+
     return Consumer<MyTheme>(builder:
     (BuildContext context,theme,child){
+      Color pickedERColor = theme.emptyRoomColor;
+      Color pickedBRColor = theme.bookedRoomColor;
       return Scaffold(
         backgroundColor: Provider.of<MyTheme>(context).color1,
         appBar: AppBar(
@@ -66,10 +71,33 @@ class SettingScreen extends StatelessWidget {
                   children: [
                     Text('Màu phòng trống',style: TextStyle(fontSize: size,color: theme.color8),),
                     GestureDetector(
+                      onTap: (){
+                        showDialog(context: (context), builder: (BuildContext context){
+                          return AlertDialog(
+                            title: Text("Chọn màu"),
+                            actions: [TextButton(
+                                onPressed: (){
+                                  theme.setEmptyRoomColor(pickedERColor);
+                                  Navigator.pop(context);},
+                                child: Text("OK"))],
+                            content: SizedBox(
+                              height: 300,
+                              child: SingleChildScrollView(
+                                child: ColorPicker(
+                                  color: pickedERColor,
+                                  onColorChanged: (Color color) {
+                                    pickedERColor = color;
+                                  },
+                                ),
+                              ),
+                            ),
+                          );
+                        });
+                      },
                       child: Container(
                         padding: EdgeInsets.all(18),
                         decoration:BoxDecoration(
-                          color: theme.color5,
+                          color: theme.emptyRoomColor,
                           borderRadius: BorderRadius.circular(30)
                         ),
                       ),
@@ -96,10 +124,33 @@ class SettingScreen extends StatelessWidget {
                   children: [
                     Text('Màu phòng đã đặt',style: TextStyle(fontSize: size,color: theme.color8),),
                     GestureDetector(
+                      onTap: (){
+                        showDialog(context: (context), builder: (BuildContext context){
+                          return AlertDialog(
+                            title: Text("Chọn màu"),
+                            actions: [TextButton(
+                                onPressed: (){
+                                  theme.setBookedRoomColor(pickedBRColor);
+                                  Navigator.pop(context);},
+                                child: Text("OK"))],
+                            content: SizedBox(
+                              height: 300,
+                              child: SingleChildScrollView(
+                                child: ColorPicker(
+                                  color: pickedBRColor,
+                                  onColorChanged: (Color color) {
+                                    pickedBRColor = color;
+                                  },
+                                ),
+                              ),
+                            ),
+                          );
+                        });
+                      },
                       child: Container(
                         padding: EdgeInsets.all(18),
                         decoration:BoxDecoration(
-                            color: theme.color6,
+                            color: theme.bookedRoomColor,
                             borderRadius: BorderRadius.circular(30)
                         ),
                       ),

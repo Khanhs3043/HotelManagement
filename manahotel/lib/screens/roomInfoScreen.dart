@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:manahotel/model/hotelMana.dart';
+import 'package:manahotel/screens/bookRoomScreen.dart';
 import 'package:manahotel/screens/editRoomInfoScreen.dart';
 import 'package:manahotel/ui/myTheme.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +14,7 @@ class RoomInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     String type = 'Phòng đơn';
     String status;
+    bool disable = false;
     Widget customerInfor = Container();
 
     Icon roomIcon = const Icon(Icons.bedroom_child_outlined,size: 30,color: Color(0xFF4D9DE6),);
@@ -23,6 +26,7 @@ class RoomInfoScreen extends StatelessWidget {
       roomIcon =const Icon(Icons.bedroom_parent_outlined,size: 30,color: Color(0xFF4D9DE6));
     }
     if(room.status==RoomStatus.available){
+      disable = false;
       status = "Trống";
       customerInfor = Container(
         padding: EdgeInsets.all(20),
@@ -31,6 +35,7 @@ class RoomInfoScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(20)
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('chưa có thông tin',style: TextStyle(
                 fontSize: 18,
@@ -40,6 +45,7 @@ class RoomInfoScreen extends StatelessWidget {
         ),
       );
     }else {
+      disable = true;
       customerInfor = Container(
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
@@ -55,7 +61,7 @@ class RoomInfoScreen extends StatelessWidget {
                   fontSize: 18,
                   color: Provider.of<MyTheme>(context).color8,
                 ),),
-                Text('ABC',style: TextStyle(
+                Text('${room.customer?.name}',style: TextStyle(
                   fontSize: 18,
                   color: Provider.of<MyTheme>(context).color9,
                 ),),
@@ -68,7 +74,7 @@ class RoomInfoScreen extends StatelessWidget {
                   fontSize: 18,
                   color: Provider.of<MyTheme>(context).color8,
                 ),),
-                Text('0987654321',style: TextStyle(
+                Text('${room.customer?.phoneNum}',style: TextStyle(
                   fontSize: 18,
                   color: Provider.of<MyTheme>(context).color9,
                 ),),
@@ -81,7 +87,7 @@ class RoomInfoScreen extends StatelessWidget {
                   fontSize: 18,
                   color: Provider.of<MyTheme>(context).color8,
                 ),),
-                Text('098876544333',style: TextStyle(
+                Text('${room.customer?.id}',style: TextStyle(
                   fontSize: 18,
                   color: Provider.of<MyTheme>(context).color9,
                 ),),
@@ -92,7 +98,7 @@ class RoomInfoScreen extends StatelessWidget {
       );
       status = "Đang sử dụng";
     }
-    return Consumer<MyTheme>(builder: (BuildContext context,theme,child){
+    return Consumer2<MyTheme,HotelMana>(builder: (BuildContext context,theme,mana,child){
       return Scaffold(
         backgroundColor: theme.color1,
         appBar: AppBar(
@@ -102,7 +108,7 @@ class RoomInfoScreen extends StatelessWidget {
           actions:[
             IconButton(
               icon:const Icon(Icons.edit),
-              onPressed: () {
+              onPressed:  disable ? null : () {
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context)=> EditRoomInfoScreen( room: room,)));
               },),
@@ -150,7 +156,7 @@ class RoomInfoScreen extends StatelessWidget {
                             ),)
                           ],
                         ),
-                        Container(margin: EdgeInsets.symmetric(vertical: 10),
+                        Container(margin: const EdgeInsets.symmetric(vertical: 10),
                           color: theme.color3,height: 1,
                         ),
                         Row(
@@ -168,7 +174,7 @@ class RoomInfoScreen extends StatelessWidget {
                             ),)
                           ],
                         ),
-                        Container(margin: EdgeInsets.symmetric(vertical: 10),
+                        Container(margin: const EdgeInsets.symmetric(vertical: 10),
                           color: theme.color3,height: 1,
                         ),
                         Row(
@@ -186,7 +192,7 @@ class RoomInfoScreen extends StatelessWidget {
                             ),)
                           ],
                         ),
-                        Container(margin: EdgeInsets.symmetric(vertical: 10),
+                        Container(margin: const EdgeInsets.symmetric(vertical: 10),
                           color: theme.color3,height: 1,
                         ),
                         Row(
@@ -204,7 +210,7 @@ class RoomInfoScreen extends StatelessWidget {
                             ),)
                           ],
                         ),
-                        Container(margin: EdgeInsets.symmetric(vertical: 10),
+                        Container(margin: const EdgeInsets.symmetric(vertical: 10),
                           color: theme.color3,height: 1,
                         ),
                         Row(
@@ -246,21 +252,40 @@ class RoomInfoScreen extends StatelessWidget {
                     Expanded(
                       flex: 8,
                       child: ElevatedButton(
-                          onPressed: (){},
-                          child: Text("Đặt phòng",style:TextStyle(
-                            color: theme.color8,
-                          )),
+                          onPressed:  disable ? null :(){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>BookRoomScreen(roomNumber: room.number,floor: room.floor,)));
+                          },
+
                           style: ButtonStyle(
                             padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 15)),
                             backgroundColor: MaterialStatePropertyAll(theme.color5)
                         ),
+                          child: Text("Đặt phòng",style:TextStyle(
+                            color: theme.color8,
+                          )),
                       ),
                     ),
-                    SizedBox(width: 20,),
+                    const SizedBox(width: 20,),
                     Expanded(
                       flex: 3,
                       child: ElevatedButton(
-                          onPressed: (){},
+                          onPressed:disable ? null : (){
+                            showDialog(context: (context), builder: (BuildContext context){
+                              return AlertDialog(
+                                title: const Text("Thông báo"),
+                                content: const Text("Bạn có chắc muốn xóa phòng?"),
+                                actions: [
+                                  TextButton(onPressed: (){
+                                    mana.deleteRoom(room);
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                  }, child: Text("OK")),
+                                  TextButton(onPressed: (){Navigator.pop(context);},
+                                      child: Text("Hủy")),
+                                ],
+                              );
+                            });
+                          },
                           style: ButtonStyle(
                               padding: const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 15)),
                               backgroundColor: MaterialStatePropertyAll(theme.color7)

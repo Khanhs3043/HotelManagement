@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:manahotel/model/hotelMana.dart';
+import 'package:manahotel/screens/bookRoomScreen.dart';
+import 'package:manahotel/screens/checkOutScreen.dart';
 import 'package:manahotel/screens/roomManagementScreen.dart';
 import 'package:manahotel/screens/settingScreen.dart';
 import 'package:provider/provider.dart';
@@ -9,14 +12,14 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MyTheme>(
-      builder: (BuildContext context,theme,child){
+    return Consumer2<MyTheme,HotelMana>(
+      builder: (BuildContext context,theme,mana,child){
         double size = 18;
       return Scaffold(
         backgroundColor: Provider.of<MyTheme>(context, listen: false).color1,
         body: Column(
           children: [
-            SizedBox(height: 50,),
+            const SizedBox(height: 50,),
             Align(
               alignment: Alignment.centerRight,
               child: IconButton(
@@ -28,64 +31,61 @@ class HomeScreen extends StatelessWidget {
                 iconSize: 35,
               ),
             ),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
                 children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20,vertical: 25),
-                    decoration: BoxDecoration(
-                      color: theme.color2,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 10,
-                          offset: Offset(0,4)
-                        )
-                      ]
+                  Row(children: [
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: theme.color2,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  blurRadius: 10,
+                                  offset: Offset(0,4)
+                              )
+                            ]
+                        ),
+                        child:Column(
+                          children: [
+                            Text("Phòng trống",style: TextStyle(fontSize: 14,color:Color(0xFF00DFD2) ),),
+                            const SizedBox(height: 10,),
+                            Text('${mana.emptyRoom}',style: TextStyle(fontSize: 40,color:Color(0xFF00DFD2),fontWeight: FontWeight.bold))
+                          ],
+                        ),),
                     ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Phòng trống',
-                              style: TextStyle(
-                                  fontSize: size,
-                                  fontWeight: FontWeight.bold,
-                                  color: const Color(0xFF00DFD2)),),
-                            Text('10',
-                              style: TextStyle(
-                                  fontSize:size ,
-                                  fontWeight: FontWeight.bold,
-                                  color: const Color(0xFF00DFD2)),)
-                          ],
+                    const SizedBox(width: 15,),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: theme.color2,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  blurRadius: 10,
+                                  offset: Offset(0,4)
+                              )
+                            ]
                         ),
-                        SizedBox(height: 20,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child: Column(
                           children: [
-                            Text('Phòng sử dụng',
-                              style: TextStyle(
-                                  fontSize: size,
-                                  fontWeight: FontWeight.bold,
-                                  color: const Color(0xFFE57879),
-                              ),
-                            ),
-                            Text('10',style: TextStyle(
-                                fontSize: size,
-                                fontWeight: FontWeight.bold,
-                                color: const Color(0xFFE57879),
-                            )
-                            )
+                            Text("Phòng đang sử dụng",style: TextStyle(fontSize: 14,color:Color(0xFFE57879) ),),
+                            const SizedBox(height: 10,),
+                            Text('${mana.bookedRoom}',style: TextStyle(fontSize: 40,color:Color(0xFFE57879),fontWeight: FontWeight.bold))
                           ],
-                        ),
+                        ),),
+                    )
+                  ],),
 
-                      ],
-                    ),
-                  ),
                   const SizedBox(height: 60,),
                   GestureDetector(
                     onTap: (){
@@ -124,7 +124,10 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20,),
                   GestureDetector(
-                    onTap: (){},
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context)=> BookRoomScreen()));
+                    },
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 20),
                       decoration: BoxDecoration(
@@ -156,7 +159,8 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20,),
                   GestureDetector(
-                    onTap: (){},
+                    onTap: (){Navigator.push(context, MaterialPageRoute(
+                        builder: (context)=>CheckOutScreen()));},
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 20),
                       decoration: BoxDecoration(
