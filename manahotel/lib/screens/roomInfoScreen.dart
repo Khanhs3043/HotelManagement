@@ -246,7 +246,18 @@ class RoomInfoScreen extends StatelessWidget {
                     Expanded(
                       flex: 8,
                       child: ElevatedButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            if(room.status == RoomStatus.unavailable){
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  behavior: SnackBarBehavior.floating,
+                                  /*padding: EdgeInsets.all(200.0),*/
+                                  content: Text("Phòng này đã được đặt"),
+                                  duration: Duration(seconds: 3),
+                                )
+                              );
+                            }
+                          },
                           child: Text("Đặt phòng",style:TextStyle(
                             color: theme.color8,
                           )),
