@@ -85,8 +85,28 @@ class HomeScreen extends StatelessWidget {
                         ),),
                     )
                   ],),
-
-                  const SizedBox(height: 60,),
+                  const SizedBox(height: 20,),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: theme.color2,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 10,
+                              offset: Offset(0,4)
+                          )
+                        ]
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Doanh thu',style: TextStyle(fontWeight:FontWeight.bold,fontSize: 20,color:Color(0xFF00DFD2) )),
+                      Text('${mana.revenue}',style: TextStyle(fontWeight:FontWeight.bold,fontSize: 20,color: Color(0xFF00DFD2) ),)
+                    ],
+                  ),),
+                  const SizedBox(height: 40,),
                   GestureDetector(
                     onTap: (){
                       Navigator.push(context,

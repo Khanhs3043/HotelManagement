@@ -12,7 +12,8 @@ class Room extends StatelessWidget {
     required this.number,
     this.type = RoomType.single,
     this.floor = 1,
-    this.status = RoomStatus.available
+    this.status = RoomStatus.available,
+
   });
 
   String number;

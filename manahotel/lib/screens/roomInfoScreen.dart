@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:manahotel/model/hotelMana.dart';
 import 'package:manahotel/screens/bookRoomScreen.dart';
 import 'package:manahotel/screens/editRoomInfoScreen.dart';
@@ -112,6 +113,25 @@ class RoomInfoScreen extends StatelessWidget {
                 ),
                 Text(
                   '${room.customer?.id}',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Provider.of<MyTheme>(context).color9,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Ngày đặt',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Provider.of<MyTheme>(context).color8,
+                  ),
+                ),
+                Text(
+                  '${DateFormat('yyyy-MM-dd HH:mm').format(room.customer!.bookingTime)}',
                   style: TextStyle(
                     fontSize: 18,
                     color: Provider.of<MyTheme>(context).color9,

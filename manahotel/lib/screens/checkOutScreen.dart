@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:manahotel/model/hotelMana.dart';
 import 'package:manahotel/objects/room.dart';
 import 'package:manahotel/ui/myTheme.dart';
@@ -90,6 +91,30 @@ class CheckOutScreen extends StatelessWidget {
                             Text(selectedRoom!.customer!.id,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: theme.color9),)
                           ]
                       ),
+                      Container(height: 1,color: theme.color6,margin: const EdgeInsets.symmetric(vertical: 15),),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Ngày đặt",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: theme.color9),),
+                            Text(DateFormat('dd:MM:yyyy HH:mm').format(selectedRoom!.customer!.bookingTime),style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: theme.color9),)
+                          ]
+                      ),
+                      Container(height: 1,color: theme.color6,margin: const EdgeInsets.symmetric(vertical: 15),),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Ngày trả",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: theme.color9),),
+                            Text(DateFormat('dd:MM:yyyy HH:mm').format(DateTime.now()),style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: theme.color9),)
+                          ]
+                      ),
+                      Container(height: 1,color: theme.color6,margin: const EdgeInsets.symmetric(vertical: 15),),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Thành tiền",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: theme.color9),),
+                            Text('${mana.toMoney(selectedRoom!.customer!.bookingTime,DateTime.now(),selectedRoom! )}',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: theme.color9),)
+                          ]
+                      ),
                     ],
                   ),
                   const SizedBox(height: 50,),
@@ -97,6 +122,7 @@ class CheckOutScreen extends StatelessWidget {
                       onPressed: (){
                         print(selectedRoom?.number);
                        mana.checkOut(selectedRoom!.floor, selectedRoom!.number);
+                       mana.revenue += mana.toMoney(selectedRoom!.customer!.bookingTime,DateTime.now(),selectedRoom! );
                         theme.change();
                         Navigator.pop(context);
                       },

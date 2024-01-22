@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:manahotel/model/hotelMana.dart';
 import 'package:manahotel/ui/myTheme.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ class BookRoomScreen extends StatelessWidget {
   BookRoomScreen({super.key, this.floor,this.roomNumber});
   @override
   Widget build(BuildContext context) {
+    DateTime time = DateTime.now();
     TextEditingController roomName = TextEditingController();
     TextEditingController roomFloor = TextEditingController();
     TextEditingController name = TextEditingController();
@@ -70,11 +72,32 @@ class BookRoomScreen extends StatelessWidget {
                           hintStyle: TextStyle(color: theme.color9)
                       )
                   ),
+                  const SizedBox(height: 10,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Ngày đặt:',style: TextStyle(color: theme.color9,fontSize: 18)),
+                      TextButton(onPressed:()async{
+                        final DateTime? dateTime = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2020),
+                            lastDate: DateTime(2026)
+                        );
+
+                        if (dateTime!=null){
+                          time = dateTime;
+                          theme.change();
+                        }
+                      },
+                          child: Text(DateFormat('yyyy-MM-dd HH:mm').format(time),style: TextStyle(fontSize: 18),),)
+                    ],
+                  ),
                   const SizedBox(height: 50,),
                   ElevatedButton(
                       onPressed: (){
                         if(name.text !='' && phoneNum.text!= '' && id.text!= ''&& roomName.text!= ''&& roomFloor.text!= ''){
-                          Customer customer = Customer(name: name.text,phoneNum: phoneNum.text,id: id.text);
+                          Customer customer = Customer(name: name.text,phoneNum: phoneNum.text,id: id.text,bookingTime: time);
                           mana.bookRoom(int.parse(roomFloor.text), roomName.text, customer);
                           theme.change();
                           Navigator.pop(context);

@@ -8,7 +8,7 @@ class HotelMana with ChangeNotifier{
   int totalRoom = 25;
   int emptyRoom = 25;
   int bookedRoom = 0;
-
+  int revenue = 0;
   List<Floor> listFloor = [
     Floor(floor: 1,listRoom: [
       Room(number: '101',cost: 100000,),
@@ -65,6 +65,10 @@ class HotelMana with ChangeNotifier{
       listFloor[floorIndex].listRoom[roomIndex] = newRoom;
       notifyListeners();
 
+  }
+  int toMoney(DateTime bookingTime,DateTime checkOutTime, Room room){
+    Duration period = checkOutTime.difference(bookingTime);
+    return (period.inDays + 1)*room.cost;
   }
   bool deleteRoom(Room room){
     Floor floor = listFloor[room.floor -1];

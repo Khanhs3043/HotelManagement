@@ -2,5 +2,7 @@ class Customer{
   String name;
   String phoneNum;
   String id;
-  Customer({required this.name, required this.phoneNum,required this.id});
+  DateTime bookingTime;
+  DateTime? checkOutTime;
+  Customer({required this.name, required this.phoneNum,required this.id,required this.bookingTime, this.checkOutTime});
 }
