@@ -83,12 +83,13 @@ class EditRoomInfoScreen extends StatelessWidget {
               const SizedBox(height: 50,),
               ElevatedButton(
                 style: ButtonStyle(
-                    padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 15,horizontal: 100)),
+                    padding: const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 15,horizontal: 100)),
                     backgroundColor: MaterialStatePropertyAll(theme.color5)
                 ),
                 onPressed: (){
                   Room newRoom = Room(number: roomNumber.text,floor: int.parse(roomFloor.text),cost: int.parse(roomCost.text),type: roomType,);
                   mana.updateRoom(room,newRoom);
+                  alert = 'Lưu thành công!';
                   room = newRoom;
                   Navigator.pop(context);
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>RoomInfoScreen(room:room)));

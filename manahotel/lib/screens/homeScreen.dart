@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
               child: IconButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context)=>SettingScreen()));
+                      MaterialPageRoute(builder: (context)=>const SettingScreen()));
                 },
                 icon: Icon(Icons.settings,color: theme.color8,),
                 iconSize: 35,
@@ -55,8 +55,8 @@ class HomeScreen extends StatelessWidget {
                         child:Column(
                           children: [
                             Text("Phòng trống",style: TextStyle(fontSize: 14,color:Color(0xFF00DFD2) ),),
-                            const SizedBox(height: 10,),
-                            Text('${mana.emptyRoom}',style: TextStyle(fontSize: 40,color:Color(0xFF00DFD2),fontWeight: FontWeight.bold))
+                            const SizedBox(height: 20,),
+                            Text('${mana.emptyRoom}',style: TextStyle(fontSize: 60,color:Color(0xFF00DFD2),fontWeight: FontWeight.bold))
                           ],
                         ),),
                     ),
@@ -79,8 +79,8 @@ class HomeScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             Text("Phòng đang sử dụng",style: TextStyle(fontSize: 14,color:Color(0xFFE57879) ),),
-                            const SizedBox(height: 10,),
-                            Text('${mana.bookedRoom}',style: TextStyle(fontSize: 40,color:Color(0xFFE57879),fontWeight: FontWeight.bold))
+                            const SizedBox(height: 20,),
+                            Text('${mana.bookedRoom}',style: TextStyle(fontSize: 60,color:Color(0xFFE57879),fontWeight: FontWeight.bold))
                           ],
                         ),),
                     )
